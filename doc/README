@@ -1,0 +1,14 @@
+调试：Android
+adb devices
+adb reverse tcp:8081 tcp:8081 启动调试
+react-native run-android
+
+调试：IOS
+1. react-native run-ios 用模拟器调试
+2.真机调试需要用xcode
+
+
+
+Swiper 因为对Android兼容不好，所以弃用。
+viewpager，因为轮播时，下面的圆点显示有误，所以弃用。
+而ViewpagerAndroid因为只支持安卓系统，所以很少用到，在ios必须另找组件。

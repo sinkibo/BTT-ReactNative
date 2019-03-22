@@ -1,0 +1,80 @@
+# React Native Example
+
+React Native(Redux) is one of the popular mobile development framework
+
+BTT provides an adapter for RN to accelerate the development
+
+Customer can adopt RN and integrate it with BTT Client Engine
+
+BTT also provides an example to demonstrate the best practice
+
+
+## Build Setup
+
+``` bash
+# install dependencies
+npm install
+
+#Re-create the iOS and Android folders and native code
+react-native eject
+
+#run with simulator iso
+react-native run-ios
+
+#run with mobile ios
+1.need xcode tools. Select your mobile
+2.Trus your tester :Common > Device Manage
+3. Press "Start" Button in XCode Tool.
+
+#builds your app and starts it on a connected Android emulator or device
+1. adb devices
+2. adb reverse tcp:8081 tcp:8081 启动调试,android 5.0以后才提供的。
+3. react-native run-android
+
+
+#enable log
+react-native log-android [starts adb logcat]
+react-native log-ios [starts iOS device syslog tail]
+
+#make apk for android . Or use 'android studio' generate APK
+https://facebook.github.io/react-native/docs/signed-apk-android.html
+1. keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+PWD:123456 Name:DTT Org:DTT
+2. find JDK path on MAC and cd path
+$ /usr/libexec/java_home
+3.sudo keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+4.update android/gradle.properties and android/app/build.gradle
+5. build the apk
+$ cd android
+$ ./gradlew assembleRelease 编译打包apk
+6.The generated APK can be found under android/app/build/outputs/apk/release/app-release.apk
+7.release 模式运行
+react-native run-android --variant=release
+8.在设备安装release版本
+cd android && sudo ./gradlew installRelease
+
+Problem: 
+1.Add React Native into Bundle to fix quit when open the app.(闪退),因为报错找不到index.android bundle
+https://blog.csdn.net/student9128/article/details/80322114
+react-native bundle --platform android --dev false --entry-file index.js  --bundle-output android/app/src/main/assets/index.android.bundle  --assets-dest android/app/src/main/res/
+2.Error: Duplicate resources
+https://github.com/facebook/react-native/issues/22234
+edit the /node_modules/react-native/react.gradle file
+and add the doLast right after the doFirst block, manually. and then clean the build on Android Stidio.BUild>Clean Project
+3. sudo xcode-select -s /Applications/Xcode.app/Contents/Developer/
+解决方法：在 终端执行如下命令 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer/
+注意：前提是你已经安装了xcode
+4.License for package Android SDK Build-Tools 28.0.3 not accepted.
+#cd /Users/roy/Library/Android/sdk/tools/bin
+#./sdkmanager --licenses  >>>>>>accepted License
+5.修改PackageManager的启动端口
+#react-native start --port 18081 默认是8081.改为18081
+6.Error: ENOENT: no such file or directory, uv_cwd
+重启shell
+7.undefined is not an object (evaluating ‘RNGestureHandlerModule.State’
+https://blog.csdn.net/scnetsong/article/details/84334223
+    1.remove node_modules and package-lock.json
+    2.npm install
+    3.npm install --save react-navigation
+    4.npm install --save react-native-gesture-handler
+    5.react-native link

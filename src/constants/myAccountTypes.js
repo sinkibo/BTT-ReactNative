@@ -1,0 +1,7 @@
+
+export const LOAD_DATA_DOING = 'LOAD_DATA_DOING';
+
+export const LOAD_DATA_DONE_SUCCESS = 'LOAD_DATA_SUCCESS';
+
+export const LOAD_DATA_DONE_ERROR = 'LOAD_DATA_ERROR';
+
